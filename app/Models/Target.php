@@ -9,6 +9,8 @@ class Target extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_target';
+
     protected $fillable = [
         'id_rekening',
         'tahun',

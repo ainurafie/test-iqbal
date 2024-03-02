@@ -9,6 +9,8 @@ class Rekening extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_rekening';
+
     protected $fillable = [
         'jenis_rekening',
         'sub_rekening',

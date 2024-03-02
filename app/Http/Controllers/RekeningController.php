@@ -39,8 +39,8 @@ class RekeningController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_rekening' => 'string|required|max:255',
-            'sub_rekening' => 'string|required|max:255',
+            'jenis_rekening' => 'numeric|required',
+            'sub_rekening' => 'numeric|required',
             'nama_rekening' => 'string|required|max:255'
         ]);
 
@@ -82,8 +82,8 @@ class RekeningController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'jenis_rekening' => 'string|required|max:255',
-            'sub_rekening' => 'string|required|max:255',
+            'jenis_rekening' => 'numeric|required',
+            'sub_rekening' => 'numeric|required',
             'nama_rekening' => 'string|required|max:255'
         ]);
 

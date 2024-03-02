@@ -89,7 +89,7 @@
         <script>
             $(document).ready(function () {
             $('.btn-danger').on('click', function () {
-                var productId = $(this).data('rekening-id');
+                var rekeningId = $(this).data('rekening-id');
                 $('#deleteModal').data('rekening-id', rekeningId);
             });
 

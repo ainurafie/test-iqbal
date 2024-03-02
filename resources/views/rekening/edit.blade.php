@@ -15,7 +15,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="jenis_rekening">Jenis Rekening</label>
-                            <input type="text" name="jenis_rekening" id="jenis_rekening" value="{{$rekening->jenis_rekening}}" class="form-control">
+                            <input type="number" name="jenis_rekening" id="jenis_rekening" value="{{$rekening->jenis_rekening}}" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="sub_rekening">Sub Rekening</label>
-                            <input type="text" name="sub_rekening" id="sub_rekening" value="{{ $rekening->sub_rekening }}" class="form-control">
+                            <input type="number" name="sub_rekening" id="sub_rekening" value="{{ $rekening->sub_rekening }}" class="form-control">
                         </div>
                     </div>
                 </div>

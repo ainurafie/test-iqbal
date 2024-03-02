@@ -9,6 +9,8 @@ class Transaksi extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_transaksi';
+
     protected $fillable = [
         'id_rekening',
         'tanggal_setor',
