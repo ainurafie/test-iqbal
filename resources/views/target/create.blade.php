@@ -8,17 +8,17 @@
     <div class="row">
         <div class="col-10">
             <h5>Buat Target</h5>
-            <form action="" id="custom_form" class="mt-5" enctype="multipart/form-data">
-                {{-- @method('PATCH')
-                @csrf --}}
+            <form action="{{ route('target.store') }}" method="post" id="custom_form" class="mt-5" enctype="multipart/form-data">
+                @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="jenis_rekening">Jenis Rekening</label>
-                            <select class="form-control" id="jenis_rekening" name="jenis_rekening" value="">
-                                <option class="form-control" value="" disabled selected>Pilih Jenis Rekening</option>
-                                <option class="form-control" value="laki-laki">92912</option>
-                                <option class="form-control" value="perempuan">81001</option>
+                            <select class="form-control" id="jenis_rekening" name="jenis_rekening">
+                                <option value="" disabled selected>Pilih Jenis Rekening</option>
+                                @foreach ($rekenings as $rekening)
+                                <option value="{{ $rekening->id }}">{{ $rekening->jenis_rekening }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="sub_rekening">Sub Rekening</label>
-                            <input type="text" name="sub_rekening" id="sub_rekening"  class="form-control" disabled>
+                            <input type="text" name="sub_rekening" id="sub_rekening"  class="form-control" value="">
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="nama_rekening">Nama Rekening</label>
-                            <input type="text" name="nama_rekening" id="nama_rekening" class="form-control" disabled>
+                            <input type="text" name="nama_rekening" id="nama_rekening" class="form-control" >
                         </div>
                     </div>
                 </div>
@@ -43,15 +43,15 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="tahun">Tahun Anggaran</label>
-                            <input type="text" name="tahun" id="tahun" class="form-control" >
+                            <input type="number" name="tahun" id="tahun" class="form-control" >
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="target">Target (Rp)</label>
-                            <input type="text" name="target" id="target" class="form-control">
+                            <label for="jumlah_target">Target (Rp)</label>
+                            <input type="number" name="jumlah_target" id="jumlah_target" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
     </div>
 @endsection
 
-{{-- @push('page_js')
+@push('page_js')
 <script>
     $(document).on('click', '#btn_submit', function(e) {
             e.preventDefault();
@@ -152,4 +152,4 @@
             $("#btn_submit").prop("disabled", false);
         }
 </script>
-@endpush --}}
+@endpush

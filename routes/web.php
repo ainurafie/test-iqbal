@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RekeningController;
+use App\Http\Controllers\TargetController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,17 +35,21 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('rekening', RekeningController::class)->except('update');
 
     Route::patch('rekening/{rekening}', [RekeningController::class, 'update'])->name('rekening.update');
+
+    Route::resource('target', TargetController::class)->except('update');
+
+    Route::patch('target/{target}', [TargetController::class, 'update'])->name('target.update');
 });
 
-Route::get('/target', function () {
-    return view('target.index');
-});
-Route::get('/target-create', function () {
-    return view('target.create');
-});
-Route::get('/target-edit', function () {
-    return view('target.edit');
-});
+// Route::get('/target', function () {
+//     return view('target.index');
+// });
+// Route::get('/target-create', function () {
+//     return view('target.create');
+// });
+// Route::get('/target-edit', function () {
+//     return view('target.edit');
+// });
 Route::get('/transaksi', function () {
     return view('transaksi.index');
 });

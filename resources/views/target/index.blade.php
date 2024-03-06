@@ -13,7 +13,7 @@
                         <h5 class="m-0 font-weight-bold">Tabel Target</h5>
                     </div>
                     <div class="d-flex flex-row">
-                        <form method="get" class="mr-3">
+                        <form action="{{ route('target.index') }}" method="get" class="mr-3">
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
@@ -21,14 +21,14 @@
                                 <input type="search" placeholder="Pencarian" name="search" class="form-control" aria-label="Search" aria-describedby="basic-addon1" value="{{ request('search') }}">
                             </div>
                         </form>
-                        <a href="/target-create" class="btn btn-primary mb-2"><i class="fa fa-pencil-alt"></i> Tambah</a>
+                        <a href="{{ route('target.create') }}" class="btn btn-primary mb-2"><i class="fa fa-pencil-alt"></i> Tambah</a>
                     </div>
                 </div>
-                {{-- @if(session()->has('message'))
+                @if(session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}
                     </div>
-                @endif --}}
+                @endif
                 <div class="table-responsive mt-4">
                     <table class="table table-bordered table-hover">
                         <tr>
@@ -36,50 +36,36 @@
                             <th>Jenis Rekening</th>
                             <th>Sub Rekening</th>
                             <th>Nama Rekening</th>
-                            <th>Tahun Anggaran</th>
-                            <th>Target (Rp)</th>
+                            <th>Tahun Angaran</th>
+                            <th>Target(RP)</th>
                             <th>Action</th>
                         </tr>
-                        {{-- @forelse ($rekenings as $rekening) --}}
-                        {{-- <tr>
+                        @forelse ($targets as $target)
+                        <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $rekening->jenis_rekening }}</td>
-                            <td>{{ $rekening->sub_rekening }}</td>
-                            <td>{{ $rekening->nama_rekening }}</td>
-                            <td>{{ $rekening->nama_rekening }}</td>
-                            <td>{{ $rekening->nama_rekening }}</td>
+                            <td>{{ $target->jenis_rekening }}</td>
+                            <td>{{ $target->sub_rekening }}</td>
+                            <td>{{ $target->nama_rekening }}</td>
+                            <td>{{ $target->tahun }}</td>
+                            <td>{{ $target->target }}</td>
                             <td>
                                 <div class="d-flex flex-row">
-                                    <a href="{{ route('rekening.edit', ['rekening' => $rekening->id_rekening]) }}" class="btn btn-info mr-3"><i class="fa fa-edit"></i></a>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-rekening-id="{{ $rekening->id_rekening }}"><i class="fa fa-trash"></i></button>
+                                    <a href="{{ route('target.edit', ['target' => $target->id_target]) }}" class="btn btn-info mr-3"><i class="fa fa-edit"></i></a>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-target-id="{{ $target->id_target }}"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                         @empty
                             <td colspan="10" class="text-center">Data tidak ada</td>
-                        @endforelse --}}
-                        <tr>
-                            <td>1</td>
-                            <td>asdad</td>
-                            <td>asdad</td>
-                            <td>asdad</td>
-                            <td>asdad</td>
-                            <td>asdad</td>
-                            <td>
-                                <div class="d-flex flex-row">
-                                    <a href="/target-edit" class="btn btn-info mr-3"><i class="fa fa-edit"></i></a>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
+                        @endforelse
                     </table>
-                    {{-- {{ $rekenings->links() }} --}}
+                    {{ $targets->links() }}
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -107,17 +93,17 @@
         <script>
             $(document).ready(function () {
             $('.btn-danger').on('click', function () {
-                var productId = $(this).data('rekening-id');
-                $('#deleteModal').data('rekening-id', rekeningId);
+                var targetId = $(this).data('target-id');
+                $('#deleteModal').data('target-id', targetId);
             });
 
             $('#deleteModal').on('show.bs.modal', function () {
-                var rekeningId = $(this).data('rekening-id');
-                var deleteUrl = "{{ route('rekening.destroy', ['rekening' => 'id']) }}";
-                deleteUrl = deleteUrl.replace('id', rekeningId);
+                var targetId = $(this).data('target-id');
+                var deleteUrl = "{{ route('target.destroy', ['target' => 'id']) }}";
+                deleteUrl = deleteUrl.replace('id', targetId);
                 $('#deleteForm').attr('action', deleteUrl);
             });
         });
         </script>
-    @endpush --}}
+    @endpush
 @endsection
