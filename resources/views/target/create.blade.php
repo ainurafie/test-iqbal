@@ -8,16 +8,17 @@
     <div class="row">
         <div class="col-10">
             <h5>Buat Target</h5>
+            <input type="text" class="" id="allRekening" value="{{$rekenings}}" hidden>
             <form action="{{ route('target.store') }}" method="post" id="custom_form" class="mt-5" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="jenis_rekening">Jenis Rekening</label>
-                            <select class="form-control" id="jenis_rekening" name="jenis_rekening">
+                            <label for="id_rekening">Jenis Rekening</label>
+                            <select class="form-control" id="id_rekening" name="id_rekening">
                                 <option value="" disabled selected>Pilih Jenis Rekening</option>
                                 @foreach ($rekenings as $rekening)
-                                <option value="{{ $rekening->id }}">{{ $rekening->jenis_rekening }}</option>
+                                    <option value="{{ $rekening->id_rekening }}">{{ $rekening->jenis_rekening }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -27,7 +28,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="sub_rekening">Sub Rekening</label>
-                            <input type="text" name="sub_rekening" id="sub_rekening"  class="form-control" value="">
+                            <input type="text" id="sub_rekening" disabled class="form-control" value="">
                         </div>
                     </div>
                 </div>
@@ -35,7 +36,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="nama_rekening">Nama Rekening</label>
-                            <input type="text" name="nama_rekening" id="nama_rekening" class="form-control" >
+                            <input type="text" id="nama_rekening" disabled class="form-control" >
                         </div>
                     </div>
                 </div>
@@ -63,6 +64,19 @@
 
 @push('page_js')
 <script>
+
+    $(document).on("change", "#id_rekening", function() {
+        var id_rekening = $(this).val();
+        var allRekening = JSON.parse($("#allRekening").val());
+
+        var filteredData = allRekening.filter(function(item) {
+            return item.id_rekening == id_rekening;
+        });
+
+        $("#sub_rekening").val(filteredData[0].sub_rekening);
+        $("#nama_rekening").val(filteredData[0].nama_rekening);
+    });
+
     $(document).on('click', '#btn_submit', function(e) {
             e.preventDefault();
             customFormSubmit();

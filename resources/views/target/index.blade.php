@@ -47,7 +47,7 @@
                             <td>{{ $target->sub_rekening }}</td>
                             <td>{{ $target->nama_rekening }}</td>
                             <td>{{ $target->tahun }}</td>
-                            <td>{{ $target->target }}</td>
+                            <td>{{ $target->jumlah_target }}</td>
                             <td>
                                 <div class="d-flex flex-row">
                                     <a href="{{ route('target.edit', ['target' => $target->id_target]) }}" class="btn btn-info mr-3"><i class="fa fa-edit"></i></a>
@@ -75,7 +75,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete this user?</p>
+                    <p>Are you sure you want to delete this target?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

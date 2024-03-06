@@ -15,10 +15,13 @@ class TargetController extends Controller
     {
         $search = $request->input('search');
 
-        $targets = Target::where(function ($query) use ($search) {
+        $targets = Target::leftJoin('rekenings', 'targets.id_rekening', '=', 'rekenings.id_rekening')->where(function ($query) use ($search) {
             if ($search) {
                 $query->where('tahun', 'like', '%' . $search . '%')
-                ->orWhere('jumlah_target', 'like', '%' . $search . '%');
+                ->orWhere('jumlah_target', 'like', '%' . $search . '%')
+                ->orWhere('rekenings.jenis_rekening', 'like', '%' . $search . '%')
+                ->orWhere('rekenings.sub_rekening', 'like', '%' . $search . '%')
+                ->orWhere('rekenings.nama_rekening', 'like', '%' . $search . '%');
             }
         })->paginate(10);
 
@@ -31,7 +34,7 @@ class TargetController extends Controller
     public function create()
     {
         $rekenings = Rekening::get();
-        return view('target.create',compact('rekenings'));
+        return view('target.create', compact('rekenings'));
     }
 
     /**
@@ -39,29 +42,15 @@ class TargetController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $request->validate([
-                'jenis_rekening' => 'numeric|required',
-                'sub_rekening' => 'numeric|required',
-                'nama_rekening' => 'string|required|max:255',
-                'tahun' => 'numeric|required',
-                'jumlah_target' => 'numeric|required'
-            ]);
-    
-        } catch (\Throwable $th) {
-            $errors = $e->validator->getMessageBag()->toArray();
+        $request->validate([
+            'id_rekening' => 'numeric|required',
+            'tahun' => 'numeric|required',
+            'jumlah_target' => 'numeric|required'
+        ]);
 
-            return response()->json([
-                'success' => false,
-                'data' => null,
-                'message' => 'Validasi gagal.',
-                'errors' => $errors,
-            ], 422);
-        }
-       
         $input = $request->all();
 
-        Rekening::create($input);
+        Target::create($input);
 
         if (request()->ajax()) {
             return response()->json([
@@ -87,8 +76,8 @@ class TargetController extends Controller
     public function edit(string $id)
     {
         $target = Target::where('id_target', $id)->first();
-
-        return view('target.edit', compact('target'));
+        $rekenings = Rekening::get();
+        return view('target.edit', compact('target', 'rekenings'));
     }
 
     /**
@@ -97,13 +86,10 @@ class TargetController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'jenis_rekening' => 'numeric|required',
-            'sub_rekening' => 'numeric|required',
-            'nama_rekening' => 'string|required|max:255',
+            'id_rekening' => 'numeric|required',
             'tahun' => 'numeric|required',
             'jumlah_target' => 'numeric|required'
         ]);
-
 
         $input = $request->all();
 

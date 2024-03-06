@@ -20,25 +20,19 @@ use App\Http\Controllers\TargetController;
 //     return view('welcome');
 // });
 
-Route::middleware(['guest'])->group(function () {
 
-    Route::get('/', [AuthController::class, 'loginIndex'])->name('login.index');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+Route::get('/', [AuthController::class, 'loginIndex'])->name('login.index');
+Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard-admin', [AdminController::class, 'index'])->name('admin.index');
 
-    Route::resource('rekening', RekeningController::class)->except('update');
+    Route::resource('rekening', RekeningController::class);
 
-    Route::patch('rekening/{rekening}', [RekeningController::class, 'update'])->name('rekening.update');
-
-    Route::resource('target', TargetController::class)->except('update');
-
-    Route::patch('target/{target}', [TargetController::class, 'update'])->name('target.update');
+    Route::resource('target', TargetController::class);
 });
 
 // Route::get('/target', function () {

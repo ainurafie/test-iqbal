@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id('id_target');
             $table->unsignedBigInteger('id_rekening'); // Change to unsignedBigInteger
             $table->foreign('id_rekening')->references('id_rekening')->on('rekenings');
-            $table->date('tahun');
-            $table->string('nama_rekening', 255);
+            $table->year('tahun');
             $table->bigInteger('jumlah_target');
             $table->timestamps();
         });
