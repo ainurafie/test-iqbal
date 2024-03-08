@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\TargetController;
+use App\Http\Controllers\TransaksiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,7 +33,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('rekening', RekeningController::class);
 
+    Route::get('/rekening-export', [RekeningController::class, 'exportRekening'])->name('export.rekening');
+
     Route::resource('target', TargetController::class);
+
+    Route::get('/target-export', [TargetController::class, 'exportTarget'])->name('export.target');
+
+    Route::resource('transaksi', TransaksiController::class);
+
+    Route::get('/transaksi-export', [TransaksiController::class, 'exportTransaksi'])->name('export.transaksi');
 });
 
 // Route::get('/target', function () {
@@ -44,13 +53,13 @@ Route::middleware(['auth'])->group(function () {
 // Route::get('/target-edit', function () {
 //     return view('target.edit');
 // });
-Route::get('/transaksi', function () {
-    return view('transaksi.index');
-});
-Route::get('/transaksi-create', function () {
-    return view('transaksi.create');
-});
-Route::get('/transaksi-edit', function () {
-    return view('transaksi.edit');
-});
+// Route::get('/transaksi', function () {
+//     return view('transaksi.index');
+// });
+// Route::get('/transaksi-create', function () {
+//     return view('transaksi.create');
+// });
+// Route::get('/transaksi-edit', function () {
+//     return view('transaksi.edit');
+// });
 

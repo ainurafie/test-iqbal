@@ -22,6 +22,7 @@
                             </div>
                         </form>
                         <a href="{{ route('rekening.create') }}" class="btn btn-primary mb-2"><i class="fa fa-pencil-alt"></i> Tambah</a>
+                        <a href="{{ route('export.rekening') }}" class="btn btn-primary mb-2"><i class="fa fa-pencil-alt"></i> Export</a>
                     </div>
                 </div>
                 @if(session()->has('message'))

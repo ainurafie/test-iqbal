@@ -15,7 +15,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     Rekening</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$rekening_count}}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="bi bi-table fa-2x text-gray-300"></i>
@@ -31,7 +31,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Target</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$target_count}}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="bi bi-table fa-2x text-gray-300"></i>
@@ -47,7 +47,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                     Transaksi</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$transaksi_count}}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="bi bi-table fa-2x text-gray-300"></i>

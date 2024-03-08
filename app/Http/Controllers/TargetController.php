@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Target;
 use App\Models\Rekening;
+use App\Exports\TargetExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TargetController extends Controller
 {
@@ -120,5 +122,9 @@ class TargetController extends Controller
         $target->delete();
 
         return redirect()->route('target.index')->with('message', 'Data berhasil di hapus');
+    }
+
+    public function exportTarget(){
+        return Excel::download(new TargetExport(), 'Data Target.xlsx', 'Xlsx');
     }
 }

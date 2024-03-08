@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rekening;
+use App\Exports\RekeningExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RekeningController extends Controller
 {
@@ -116,5 +118,8 @@ class RekeningController extends Controller
         $rekening->delete();
 
         return redirect()->route('rekening.index')->with('message', 'Data berhasil di hapus');
+    }
+    public function exportRekening(){
+        return Excel::download(new RekeningExport(), 'Data Rekening.xlsx', 'Xlsx');
     }
 }

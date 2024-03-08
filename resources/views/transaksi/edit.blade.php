@@ -7,27 +7,23 @@
 @section('content')
     <div class="row">
         <div class="col-10">
-            <h5>Edit Target</h5>
-            <form action="" id="custom_form" class="mt-5" enctype="multipart/form-data">
-                {{-- @method('PATCH')
-                @csrf --}}
+            <h5>Edit Tranaksi</h5>
+            <input type="text" class="" id="allRekening" value="{{$rekenings}}" hidden>
+            <form action="{{route('transaksi.update', ['transaksi' => $transaksi->id_transaksi])}}" id="custom_form" class="mt-5" enctype="multipart/form-data">
+                @method('PATCH')
+                @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="jenis_rekening">Jenis Rekening</label>
-                            <select class="form-control" id="jenis_rekening" name="jenis_rekening" value="">
-                                <option class="form-control" value="" disabled selected>Pilih Jenis Rekening</option>
-                                <option class="form-control" value="laki-laki">92912</option>
-                                <option class="form-control" value="perempuan">81001</option>
+                            <label for="id_rekening">Kode Rekening</label>
+                            <select class="form-control" id="id_rekening" name="id_rekening">
+                                <option value="" disabled selected>Pilih Kode Rekening</option>
+                                @foreach ($rekenings as $rekening)
+                                    <option value="{{ $rekening->id_rekening }}"
+                                        @if ($transaksi->id_rekening == $rekening->id_rekening) selected @endif>{{ $rekening->jenis_rekening}}.{{$rekening->sub_rekening}}
+                                    </option>
+                                @endforeach
                             </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="sub_rekening">Sub Rekening</label>
-                            <input type="text" name="sub_rekening" id="sub_rekening"  class="form-control" disabled>
                         </div>
                     </div>
                 </div>
@@ -42,16 +38,18 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="tahun">Tahun Anggaran</label>
-                            <input type="text" name="tahun" id="tahun" class="form-control" >
+                            <label for="tanggal_setor">Tanggal Setor</label>
+                            <input type="date" name="tanggal_setor" id="tanggal_setor" class="form-control"
+                                value="{{ $transaksi->tanggal_setor }}">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="target">Target (Rp)</label>
-                            <input type="text" name="target" id="target" class="form-control">
+                            <label for="jumlah_setoe">Jumlah Setor (Rp)</label>
+                            <input type="number" name="jumlah_setor" id="jumlah_setor"
+                                value="{{ $transaksi->jumlah_setor }}" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -61,10 +59,34 @@
     </div>
 @endsection
 
-{{-- @push('page_js')
-<script>
-    $(document).on('click', '#btn_submit', function(e) {
-        console.log('Button clicked'); // Debug statemen
+@push('page_js')
+    <script>
+        $(document).ready(function() {
+            var id_rekening = $("#id_rekening").val();
+            var allRekening = JSON.parse($("#allRekening").val());
+
+            var filteredData = allRekening.filter(function(item) {
+                return item.id_rekening == id_rekening;
+            });
+
+            $("#sub_rekening").val(filteredData[0].sub_rekening);
+            $("#nama_rekening").val(filteredData[0].nama_rekening);
+        });
+
+        $(document).on("change", "#id_rekening", function() {
+            var id_rekening = $(this).val();
+            var allRekening = JSON.parse($("#allRekening").val());
+
+            var filteredData = allRekening.filter(function(item) {
+                return item.id_rekening == id_rekening;
+            });
+
+            $("#sub_rekening").val(filteredData[0].sub_rekening);
+            $("#nama_rekening").val(filteredData[0].nama_rekening);
+        });
+
+        $(document).on('click', '#btn_submit', function(e) {
+            console.log('Button clicked'); // Debug statemen
             console.log('sss');
             e.preventDefault();
             customFormSubmit();
@@ -90,7 +112,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'X-HTTP-Method-Override': 'PATCH'
                 },
-                success: function (result) {
+                success: function(result) {
                     if (result.success) {
                         console.log('AJAX success:', result); // Debug statement
                         Swal.fire(result.message, '', 'success').then((res) => {
@@ -106,23 +128,26 @@
 
                     // showLoading(false);
                 },
-                error: function (xhr, err, thrownError) {
+                error: function(xhr, err, thrownError) {
                     console.log('AJAX error:', xhr, err, thrownError); // Debug statement
                     var errorsArray = [];
 
                     $(".invalid-feedback-modal").remove();
 
                     var data = xhr.responseJSON;
-                    $.each(data.errors, function (key, v) {
+                    $.each(data.errors, function(key, v) {
                         form.find('input[name="' + key + '"]')
                             .addClass('is-invalid')
-                            .after(`<div class="invalid-feedback invalid-feedback-modal float-start">` + v[0] + `</div>`);
+                            .after(`<div class="invalid-feedback invalid-feedback-modal float-start">` +
+                                v[0] + `</div>`);
                         form.find('select[name="' + key + '"]')
                             .addClass('is-invalid')
-                            .after(`<div class="invalid-feedback invalid-feedback-modal float-start">` + v[0] + `</div>`);
+                            .after(`<div class="invalid-feedback invalid-feedback-modal float-start">` +
+                                v[0] + `</div>`);
                         form.find('textarea[name="' + key + '"]')
                             .addClass('is-invalid')
-                            .after(`<div class="invalid-feedback invalid-feedback-modal float-start">` + v[0] + `</div>`);
+                            .after(`<div class="invalid-feedback invalid-feedback-modal float-start">` +
+                                v[0] + `</div>`);
 
                         var errorObj = {
                             key: key,
@@ -135,18 +160,18 @@
                         var error_html = '';
                         $.each(errorsArray, function(index, value) {
                             error_html += `
-                                <li class="text-start">` + value.text + `</li>
-                            `;
+                            <li class="text-start">` + value.text + `</li>
+                        `;
                         });
 
                         Swal.fire({
                             title: '<strong>There is something wrong</strong>',
                             icon: 'warning',
                             html: `
-                                <ul class="mb-0">
-                                    ` + error_html + `
-                                </ul>
-                            `,
+                            <ul class="mb-0">
+                                ` + error_html + `
+                            </ul>
+                        `,
                             showCloseButton: true,
                         });
                     }
@@ -157,5 +182,5 @@
 
             $("#btn_submit").prop("disabled", false);
         }
-</script>
-@endpush --}}
+    </script>
+@endpush

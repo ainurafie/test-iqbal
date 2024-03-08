@@ -69,7 +69,7 @@
                     <span>Target</span>
                 </a>
             </li>
-            <li class="nav-item {{ request()->path() == 'target' ? 'active' : '' }}">
+            <li class="nav-item {{ request()->path() == 'transaksi' ? 'active' : '' }}">
                 <a class="nav-link" href="/transaksi">
                     <i class="bi bi-table"></i>
                     <span>Transaksi</span>
